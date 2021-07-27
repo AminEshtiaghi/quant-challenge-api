@@ -16,9 +16,9 @@ for this purpose, I have decided to separate back-end and front-end code from ea
 - Sail (PHP, MySQL8, Redis Docker)
 
 #### Front-end (APP)
-- Vue
+- VueJS
 - Vuex
-- Vuetify
+- VuetifyJS
 - TypeScript
 - npm
 </p>
