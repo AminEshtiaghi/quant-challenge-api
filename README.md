@@ -23,18 +23,18 @@ for this purpose, I have decided to separate back-end and front-end code from ea
 - npm
 </p>
 
-<p align="center">
+<p>
 Here is a diagram chart which illustrate how the systems are communicaating with each other.
 </p>
-<p>
+<p align="center">
 <img src="https://raw.githubusercontent.com/AminEshtiaghi/quant-challenge-api/main/resources/docs/DesignChart.jpg" width="400">
 </p>
 
 #### Laravel Back-end API
 
-Back-end API is only responsible for receiveing and resposing the front-end app.
+Back-end API is only responsible for receiving and responding the front-end app.
 <br />
-we have two end-point regarding auth resposiblitties:
+we have two end-point regarding auth responsibilities:
 <br/>
 - `/api/auth/login`
 - `/api/auth/logout`
