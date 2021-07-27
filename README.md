@@ -33,14 +33,12 @@ Here is a diagram chart which illustrate how the systems are communicaating with
 #### Laravel Back-end API
 
 Back-end API is only responsible for receiving and responding the front-end app.
-<br />
 we have two end-point regarding auth responsibilities:
-<br/>
+
 - `/api/auth/login`
 - `/api/auth/logout`
-<br/>
+
 And two API for the search page:
-<br/>
 - `/api/search/currencies` *this API returns TOP 100 available currency list [because of performance issues for this step, I prevent of getting all the existing currency list from 3rd party API]*
 - `/api/search/details/{symbol}` *this API returns all the name, price and market information of the selected currency from the previous step which user selected.*
 
