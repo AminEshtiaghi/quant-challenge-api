@@ -71,7 +71,7 @@ I also use *TypeScript* in order to have a very structural model in all the segm
 - `npm install`
 - `npm run serve`
 
-By now, you have this app on your browser by visiting [`lohalhost:8080`](http://localhost:80)
+By now, you have this app on your browser by visiting [`lohalhost:8080`](http://localhost:8080)
 
 
 
