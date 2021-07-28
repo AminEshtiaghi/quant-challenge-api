@@ -50,7 +50,7 @@ Except the `login` API, the rest of them are keeping secure by passport authenti
 - **Note** please make sure that your docker is running on your system.
 - `vendor/bin/sail up -d`
 - `vendor/bin/sail artisan migrate`
-- `vendor/bin/sail artisan db:seeder`
+- `vendor/bin/sail artisan db:seed`
 - `vendor/bin/sail artisan passport:keys`
 - **Note** please make sure that the correct *nomics API key*  is set in the *.env* file (`NOMICS_KEYNOMICS_KEY`).
 
