@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\Search;
 
+use App\Dto\Response\Transformer\CurrencyResponseDtoTransformer;
 use App\Http\Controllers\Controller;
-use App\Services\NomicsService;
 use Illuminate\Http\JsonResponse;
+use App\Services\NomicsService;
 
 class CurrencySearchController extends Controller
 {
+    private CurrencyResponseDtoTransformer $currencyResponseDtoTransformer;
+
+    public function __construct(CurrencyResponseDtoTransformer $currencyResponseDtoTransformer)
+    {
+        $this->currencyResponseDtoTransformer = $currencyResponseDtoTransformer;
+    }
+
     public function getCurrencies(): JsonResponse
     {
         $currencies = NomicsService::getAll();
@@ -20,15 +28,6 @@ class CurrencySearchController extends Controller
 
     private function refineResult(array $currencies): array
     {
-        $result = [];
-
-        foreach ($currencies as $currency) {
-            $result[] = [
-                'symbol' => $currency['symbol'],
-                'name' => $currency['name'],
-            ];
-        }
-
-        return $result;
+        return $this->currencyResponseDtoTransformer->transformFromArrayItems($currencies);
     }
 }
