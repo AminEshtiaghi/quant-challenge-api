@@ -77,10 +77,10 @@ By now, you have this app on your browser by visiting [`lohalhost:8080`](http://
 Both back-end API and front-end APP are covered with automation tests that are being test by following commands:
 
 - **Back-end automation test**
-    - `vendor/bin/sail artisan test`
+    - `vendor/bin/sail artisan test` [using PHPUnit](https://phpunit.de/)
 - **Front-end automation test**
-    - `npm run test:e2e`
-    - `npm run test:unit`
+    - `npm run test:e2e` [using Cypress](https://www.cypress.io/)
+    - `npm run test:unit` [using Jest](https://jestjs.io/)
 
 
 Finally, I want to thanks for the chance you give me to have your attention and thanks for your time spent on checking out these projects.
