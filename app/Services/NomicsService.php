@@ -5,11 +5,21 @@ namespace App\Services;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
-
+/**
+ * This service is responsible to connect to the API and provide what we need from it
+ *
+ * Class NomicsService
+ * @package App\Services
+ */
 class NomicsService
 {
-    private const CACHE_TTL  = 300;
+    private const CACHE_TTL = 300;
 
+    /**
+     * This method is responsible to get a list of current currencies and cache them for 300 minutes
+     *
+     * @return array
+     */
     public static function getAll(): array
     {
         $cacheKey = 'currency:all';
@@ -20,6 +30,11 @@ class NomicsService
         });
     }
 
+    /**
+     * this method is responsible to directly connect to the API and return its answer
+     *
+     * @return array
+     */
     private static function getAllFrom3rdParty(): array
     {
         $url = config('nomics.url').'/currencies/ticker';
@@ -37,6 +52,12 @@ class NomicsService
         return $response->json();
     }
 
+    /**
+     * This method is responsible to get details of a specific currency and cache them for 300 minutes
+     *
+     * @param string $symbol
+     * @return array
+     */
     public static function getDetails(string $symbol): array
     {
         $cacheKey = "currency:item:$symbol";
@@ -47,6 +68,12 @@ class NomicsService
         });
     }
 
+    /**
+     * this method is responsible to directly connect to the API and return its answer
+     *
+     * @param string $symbol
+     * @return array
+     */
     private static function getDetailsFrom3rdParty(string $symbol): array
     {
         $url = config('nomics.url').'/currencies/ticker';

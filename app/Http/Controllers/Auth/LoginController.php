@@ -14,6 +14,8 @@ use Throwable;
 class LoginController extends Controller
 {
     /**
+     * The only action of this controller which start the process of login
+     *
      * @param Request $request
      * @return JsonResponse
      * @throws ValidationException
@@ -40,6 +42,8 @@ class LoginController extends Controller
     }
 
     /**
+     * The private action of validation related to main action of this controller which is doing the login
+     *
      * @param Request $request
      * @throws ValidationException
      */
@@ -54,6 +58,13 @@ class LoginController extends Controller
         $this->validate($request, $rules);
     }
 
+    /**
+     * doing the main parts of login action especially the part which is related to the auth library
+     *
+     * @param Request $request
+     * @return array
+     * @throws UnauthorisedException
+     */
     private function doLogin(Request $request): array
     {
         $credentials = [
