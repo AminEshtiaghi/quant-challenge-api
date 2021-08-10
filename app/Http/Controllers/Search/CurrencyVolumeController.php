@@ -51,7 +51,11 @@ class CurrencyVolumeController extends Controller
             $apiResult = NomicsService::getVolumes($startAtCarbon, $endAtCarbon);
             $dto = $this->refineResult($apiResult);
 
-            return $this->returnJson($dto);
+            return $this->returnJson(
+                [
+                    'result' => $dto,
+                ]
+            );
 
         } catch (Throwable $exception) {
             Log::error($exception);

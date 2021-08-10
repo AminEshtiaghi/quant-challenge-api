@@ -131,15 +131,17 @@ class CurrencyApiTest extends TestCase
         $response->assertOk();
 
         $responseStructure = [
-            '*' => [
-                'timestamp',
-                'volume',
-                'spotVolume',
-                'derivativeVolume',
+            'result' => [
+                '*' => [
+                    'timestamp',
+                    'volume',
+                    'spotVolume',
+                    'derivativeVolume',
+                ],
             ],
         ];
         $response->assertJsonStructure($responseStructure);
-        $response->assertJsonCount(10);
+        $response->assertJsonCount(10, 'result.*');
     }
 
     /**
