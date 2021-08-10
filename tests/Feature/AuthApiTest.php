@@ -11,7 +11,7 @@ class AuthApiTest extends TestCase
      * @test
      * @return void
      */
-    public function try_login_with_invalid_credentials()
+    public function try_login_with_invalid_credentials(): void
     {
         $credentials = [
             'email' => 'lablablaa@somthing.com',
@@ -32,7 +32,7 @@ class AuthApiTest extends TestCase
      * @test
      * @return void
      */
-    public function login_with_valid_credentials()
+    public function login_with_valid_credentials(): void
     {
         $credentials = [
             'email' => 'eshtiaghi.amin@gmail.com',
@@ -60,7 +60,7 @@ class AuthApiTest extends TestCase
      * @test
      * @return void
      */
-    public function logout_with_valid_token()
+    public function logout_with_valid_token(): void
     {
         $credentials = [
             'email' => 'eshtiaghi.amin@gmail.com',
@@ -88,7 +88,7 @@ class AuthApiTest extends TestCase
      * @test
      * @return void
      */
-    public function prevent_logout_for_unknown_users()
+    public function prevent_logout_for_unknown_users(): void
     {
         $headers = [
             'Accept' => 'application/json'

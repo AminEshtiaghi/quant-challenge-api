@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
@@ -84,6 +85,59 @@ class NomicsService
             'per-page' => 1,
             'page' => 1
         ];
+
+        $response = Http::get($url, $query);
+
+        return $response->json();
+    }
+
+    /**
+     * this method is responsible to return amount of volumes from the API and cache it for 300 minutes
+     *
+     * @param Carbon $startAt
+     * @param Carbon|null $endAt
+     * @return array
+     */
+    public static function getVolumes(Carbon $startAt, ?Carbon $endAt): array
+    {
+        $startAtString = $startAt->toISOString();
+        $endAtString = '';
+        if ($endAt) {
+            $endAtString = ':'.$endAt->toISOString();
+        }
+
+        $cacheKey = "currency:item:{$startAtString}{$endAtString}";
+
+        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($startAt, $endAt) {
+
+            return self::getVolumesFrom3rdParty($startAt, $endAt);
+
+        });
+    }
+
+    /**
+     * this is responsible fo getting volume from the API
+     *
+     * @param Carbon $startAt
+     * @param Carbon|null $endAt
+     * @return array
+     */
+    private static function getVolumesFrom3rdParty(Carbon $startAt, ?Carbon $endAt): array
+    {
+        $url = config('nomics.url').'/volume/history';
+        $query = [
+            'key' => config('nomics.key'),
+            'start' => $startAt->toISOString(),
+        ];
+
+        if ($endAt) {
+            $query = array_merge(
+                $query,
+                [
+                    'end' => $endAt->toISOString(),
+                ]
+            );
+        }
 
         $response = Http::get($url, $query);
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class CurrencyApiTest extends TestCase
@@ -11,7 +12,7 @@ class CurrencyApiTest extends TestCase
      * @test
      * @return void
      */
-    public function valid_response_of_currencies()
+    public function valid_response_of_currencies(): void
     {
         $token = $this->loginAndGetToken();
 
@@ -39,7 +40,7 @@ class CurrencyApiTest extends TestCase
      * @test
      * @return void
      */
-    public function valid_response_for_market_information_currency()
+    public function valid_response_for_market_information_currency(): void
     {
         $currency = 'BTC';
         $token = $this->loginAndGetToken();
@@ -67,7 +68,7 @@ class CurrencyApiTest extends TestCase
      * @test
      * @return void
      */
-    public function invalid_data_for_market_information_currency()
+    public function invalid_data_for_market_information_currency(): void
     {
         $currency = 'LABLABLAA';
         $token = $this->loginAndGetToken();
@@ -85,6 +86,60 @@ class CurrencyApiTest extends TestCase
             'errors',
         ];
         $response->assertJsonStructure($responseStructure);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function invalid_date_for_volume_information(): void
+    {
+        $queries = [
+            'start_at'  => Carbon::now()->addDays(-10)->toISOString(),
+            'end_at'    => Carbon::now()->addDays(-20)->toISOString(),
+        ];
+
+        $token = $this->loginAndGetToken();
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => "Bearer $token"
+        ];
+
+        $queryStrings = http_build_query($queries);
+        $response = $this->get("/api/search/volume?$queryStrings", $headers);
+        $response->assertStatus(422);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function valid_volume_information(): void
+    {
+        $queries = [
+            'start_at'  => Carbon::now()->addDays(-10)->toISOString(),
+        ];
+
+        $token = $this->loginAndGetToken();
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => "Bearer $token"
+        ];
+
+        $queryStrings = http_build_query($queries);
+        $response = $this->get("/api/search/volume?$queryStrings", $headers);
+        $response->assertOk();
+
+        $responseStructure = [
+            '*' => [
+                'timestamp',
+                'volume',
+                'spotVolume',
+                'derivativeVolume',
+            ],
+        ];
+        $response->assertJsonStructure($responseStructure);
+        $response->assertJsonCount(10);
     }
 
     /**
